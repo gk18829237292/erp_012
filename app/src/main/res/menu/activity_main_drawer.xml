@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_task"
+            android:icon="@drawable/task"
+            android:title="任务管理" />
+        <item
+            android:id="@+id/menu_depart"
+            android:icon="@drawable/depart"
+            android:title="部门管理" />
+        <item
+            android:id="@+id/menu_stuff"
+            android:icon="@drawable/stuff"
+            android:title="人员管理" />
+        <item
+            android:id="@+id/menu_logout"
+            android:icon="@drawable/log_out"
+            android:title="登出" />
+
+    </group>
+
+
+</menu>
