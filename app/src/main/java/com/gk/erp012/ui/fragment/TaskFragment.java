@@ -19,11 +19,11 @@ public class TaskFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public TaskFragment getInstance(){
+    public static TaskFragment getInstance(){
         return new TaskFragment();
     }
 
-    public TaskFragment getInstance(Bundle bundle){
+    public static TaskFragment getInstance(Bundle bundle){
         TaskFragment fragment = new TaskFragment();
         fragment.setArguments(bundle);
         return fragment;

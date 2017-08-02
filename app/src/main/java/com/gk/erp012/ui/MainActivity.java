@@ -39,11 +39,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     @Override
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("任务管理");
-        setSupportActionBar(toolbar);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        if(savedInstanceState == null){
+            toolbar.setTitle("任务管理");
+            FragmentUtils.commitFragment(getSupportFragmentManager(),TaskFragment.getInstance(),R.id.frame_content);
+            navigationView.setCheckedItem(R.id.menu_task);
+        }
+        setSupportActionBar(toolbar);
         //以上是源代码 不动
 
         tv_telNum =  navigationView.getHeaderView(0).findViewById(R.id.tv_telNum);
@@ -73,7 +78,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 ToastUtils.showShortToast(mContext,"click me");
             }
         });
-        FragmentUtils.commitFragment(getSupportFragmentManager(),new TaskFragment(),R.id.frame_content);
     }
 
     @Override

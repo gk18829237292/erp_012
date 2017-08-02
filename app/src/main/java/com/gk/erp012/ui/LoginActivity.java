@@ -2,6 +2,7 @@ package com.gk.erp012.ui;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class LoginActivity extends BaseActivity  implements Response.Listener<JS
 
 
     @Override
-    public void initView() {
+    public void initView(Bundle savedInstanceState)  {
         setContentView(R.layout.activity_login);
         pDialog = new MyProgressDialog(mContext, "登录中···", null);
         et_account = (EditText) findViewById(R.id.et_account);

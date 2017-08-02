@@ -21,7 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
         mSpref = new SprefUtils(mContext);
 //        // 初始化控件
-        initView();
+        initView(savedInstanceState);
 
 //        // 初始化数据
         initData();
@@ -36,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化组件(在这里获取到每个需要用到的控件的实例，并给它们设置好必要的点击事件。)
      */
-    public abstract void initView();
+    public abstract void initView(Bundle savedInstanceState);
 
     /**
      * 初始化数据
