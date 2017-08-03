@@ -14,6 +14,9 @@ import android.widget.ListView;
 import com.gk.erp012.R;
 import com.gk.erp012.ui.view.HRPopWinwods;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -24,6 +27,9 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     private Button btn_select_type,btn_select_depart;
     private HRPopWinwods typePop,departPop;
     private Context mContext;
+    private List<String> departTypes = new ArrayList<>();
+    private List<String> departs = new ArrayList<>();
+
     public TaskFragment() {
         // Required empty public constructor
     }
@@ -55,7 +61,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
         btn_select_depart = view.findViewById(R.id.btn_select_depart);
         btn_select_type.setOnClickListener(this);
         btn_select_depart.setOnClickListener(this);
-        typePop = new HRPopWinwods(mContext,"","","") {
+        typePop = new HRPopWinwods(mContext,departTypes) {
             @Override
             public void onItemClickIt(int position) {
 
