@@ -4,11 +4,13 @@ package com.gk.erp012.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.accessibility.AccessibilityManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.gk.erp012.R;
 import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.TaskEntry;
+import com.gk.erp012.ui.adapter.TaskAdapter;
 import com.gk.erp012.ui.view.HRPopWinwods;
 import com.gk.erp012.utils.CustomRequest;
 import com.gk.erp012.utils.Logger;
@@ -49,7 +52,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     private List<String> departs = new ArrayList<>();
     private List<DepartTypeEntry> departTypeEntries = new ArrayList<>();
     private List<DepartEntry> departEntries = null;
-    private List<TaskEntry> taskEntries = null;
+    private List<TaskEntry> taskEntries = new ArrayList<>();
+    private TaskAdapter taskAdapter;
     public TaskFragment() {
         // Required empty public constructor
     }
@@ -99,7 +103,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                     DepartEntry entry = departEntries.get(position);
                     btn_select_depart.setText(entry.getName());
                     btn_select_depart.setTag(entry.getId());
-                    taskEntries = entry.getTasks();
+                    taskEntries.clear();
+                    taskEntries.addAll(entry.getTasks());
                     if(taskEntries != null){
                         updateShow();
                     }
@@ -114,6 +119,9 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                 getTasks();
             }
         });
+        taskAdapter = new TaskAdapter(mContext,taskEntries);
+        lv_task.setAdapter(taskAdapter);
+
         return view;
     }
 
@@ -166,6 +174,6 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     }
 
     public void updateShow(){
-
+        taskAdapter.notifyDataSetChanged();
     }
 }
