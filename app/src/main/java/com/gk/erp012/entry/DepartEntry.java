@@ -13,6 +13,7 @@ import java.util.List;
 
 public class DepartEntry {
     private String name;
+    private String id;
     private List<TaskEntry> tasks = new ArrayList<>();
 
     public DepartEntry() {
@@ -26,6 +27,14 @@ public class DepartEntry {
         this.name = name;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public List<TaskEntry> getTasks() {
         return tasks;
     }
@@ -37,6 +46,7 @@ public class DepartEntry {
     public static DepartEntry getFormJson(JSONObject json) throws JSONException {
         DepartEntry depart = new DepartEntry();
         depart.name = json.getString("name");
+        depart.setId(json.getString("id"));
         JSONArray tasks = json.getJSONArray("tasks");
         for(int i =0;i<tasks.length();i++){
             depart.getTasks().add(TaskEntry.getFormJson(tasks.getJSONObject(i)));

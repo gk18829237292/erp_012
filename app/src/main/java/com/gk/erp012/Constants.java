@@ -6,13 +6,15 @@ package com.gk.erp012;
 
 public class Constants {
 
-    public static final String WEB_SITE ="http://192.168.1.101:8080/ERP_011/";
-//    public static final String WEB_SITE ="http://10.20.4.164:8080/ERP_001/";
+//    public static final String WEB_SITE ="http://192.168.1.101:8080/ERP_011/";
+    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
 //    public static final String WEB_SITE ="http://172.17.12.1:8080/ERP_001/";
     public static final String API_DOMAIN = WEB_SITE+"api/";
     public static final String IMG_DOMAIN = WEB_SITE+"img/";
     //验证
     public static final String METHOD_ACCOUNT_AUTHORIZE = API_DOMAIN  + "LoginServlet";
+
+    public static final String METHOD_GETALL_TASK = API_DOMAIN+"getAllTask";
 
     //验证1
     public static final String METHOD_TASK_INSERT = API_DOMAIN + "creatTask";

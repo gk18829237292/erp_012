@@ -40,7 +40,6 @@ public abstract class HRPopWinwods implements IHRItemClickListener {
     private HRPopAdapter adapter;
 
     public HRPopWinwods(final Context context,List<String> values){
-
         this.values = values;
         this.mContext = context;
         mView = LayoutInflater.from(context).inflate(R.layout.item_popupwindows, null);
@@ -48,7 +47,11 @@ public abstract class HRPopWinwods implements IHRItemClickListener {
     }
 
     public HRPopWinwods(final Context context,String... args){
-        this(context,Arrays.asList(args));
+        this.mContext = context;
+        values = new ArrayList<>();
+        values.addAll(Arrays.asList(args));
+        mView = LayoutInflater.from(context).inflate(R.layout.item_popupwindows, null);
+        initView();
     }
 
     public void update(List<String> values){
