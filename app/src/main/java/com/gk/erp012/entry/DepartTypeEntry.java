@@ -56,5 +56,19 @@ public class DepartTypeEntry {
         return list;
     }
 
+    public List<TaskEntry> getAllTaskEntry(int maxNum){
+        List<TaskEntry> taskEntries = new ArrayList<>();
+        for(DepartEntry entry: departs){
+            taskEntries.addAll(entry.getTasks());
+            if(taskEntries.size() >= maxNum){
+                break;
+            }
+        }
+        while (taskEntries.size()>maxNum){
+            taskEntries.remove(taskEntries.size()-1);
+        }
+        return taskEntries;
+
+    }
 
 }

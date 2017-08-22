@@ -70,6 +70,10 @@ public class UserEntry {
         this.telNum = telNum;
     }
 
+    public boolean canAddTask(){
+        return type.equals("0") || type.equals("1");
+    }
+
     public void writeToSpref(SprefUtils sprefUtils){
         sprefUtils.put("account",account);
         sprefUtils.put("password",password);

@@ -9,10 +9,14 @@ public class TimeUtils {
 	
 	private static SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+	public static String convert2String(String time){
+		return sFormat.format(new Date(Long.parseLong(time)));
+	}
+
 	public static String convert2String(long time){
 		return sFormat.format(new Date(time));
 	}
-	
+
 	public static long convert2Long(String time){
 		long ans = 0;
 		try {

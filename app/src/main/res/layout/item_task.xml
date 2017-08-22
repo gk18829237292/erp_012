@@ -5,11 +5,11 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bt_nobgd"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="35dp">
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:text="GkTEST NAME"
             android:textColor="@color/colorBlack"
-            android:textSize="24sp"/>
+            android:textSize="22sp"/>
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
@@ -26,7 +26,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="right"
-            android:text="ce54545"
+            android:textColor="@color/colorBlue"
+            android:text="已按期限"
             />
     </RelativeLayout>
     <TextView

@@ -3,6 +3,7 @@ package com.gk.erp012.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.accessibility.AccessibilityManagerCompat;
@@ -54,6 +55,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     private List<DepartEntry> departEntries = null;
     private List<TaskEntry> taskEntries = new ArrayList<>();
     private TaskAdapter taskAdapter;
+    private static final int MAXTASK = 20;
+    private FloatingActionButton btn_add_task;
     public TaskFragment() {
         // Required empty public constructor
     }
@@ -111,22 +114,37 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                 }
             }
         };
-
+        btn_add_task = view.findViewById(R.id.btn_add_task);
         lv_content.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ToastUtils.showShortToast(mContext, "获取中···");
+                ToastUtils.showShortToast(mContext, "更新任务中");
+                btn_select_depart.setText("部门选择");
+                btn_select_type.setText("部门分类选择");
+                taskEntries.clear();
+                //清空操作
                 getTasks();
+                departTypes.clear();
             }
         });
         taskAdapter = new TaskAdapter(mContext,taskEntries);
         lv_task.setAdapter(taskAdapter);
-
+        if(!ErpApplication.getInstance().getUserEntry().canAddTask()){
+            btn_add_task.setVisibility(View.GONE);
+        }
         return view;
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getTasks();
+    }
+
+    @Override
     public void onClick(View view) {
+        if(lv_content.isRefreshing())
+            return;
         int id = view.getId();
         switch (id) {
             case R.id.btn_select_depart:
@@ -164,6 +182,9 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                 DepartTypeEntry entry = DepartTypeEntry.getFormJson(jsonArray.getJSONObject(i));
                 departTypeEntries.add(entry);
                 departTypes.add(entry.getName());
+                if(taskEntries.size() < MAXTASK){
+                    taskEntries.addAll(entry.getAllTaskEntry(MAXTASK));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,6 +192,11 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
             lv_content.setRefreshing(false);
         }
         typePop.update(departTypes);
+
+        while (taskEntries.size()>MAXTASK){
+            taskEntries.remove(taskEntries.size()-1);
+        }
+        updateShow();
     }
 
     public void updateShow(){

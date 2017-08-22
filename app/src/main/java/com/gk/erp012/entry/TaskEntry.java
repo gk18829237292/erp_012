@@ -20,6 +20,15 @@ public class TaskEntry {
     private String goal;
     private String reportType; // -- 0日报 1 周报，2半月报，3月报，4季报，5 半年报，6年报--
     private String departClassId;
+    private Boolean isAtTime;
+
+    public Boolean getAtTime() {
+        return isAtTime;
+    }
+
+    public void setAtTime(Boolean atTime) {
+        isAtTime = atTime;
+    }
 
     public String getTaskId() {
         return taskId;
@@ -123,6 +132,7 @@ public class TaskEntry {
         entry.setGoal(json.getString("goal"));
         entry.setReportType(json.getString("reportType"));
         entry.setDepartClassId(json.getString("departClassId"));
+        entry.setAtTime(json.getBoolean("isAtTime"));
         return entry;
     }
 }

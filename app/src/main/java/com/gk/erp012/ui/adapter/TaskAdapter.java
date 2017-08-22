@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gk.erp012.R;
 import com.gk.erp012.entry.TaskEntry;
+import com.gk.erp012.utils.TimeUtils;
 
 import org.w3c.dom.Text;
 
@@ -60,9 +61,14 @@ public class TaskAdapter extends BaseAdapter {
         TaskEntry entry = taskEntries.get(i);
         viewHolder.tv_name.setText(entry.getTaskName());
         viewHolder.tv_goal.setText(entry.getGoal());
-//        viewHolder.tv_status.setText(entry.get);
-        viewHolder.tv_goal.setText(entry.getUpdateTime());
-
+        if(entry.getAtTime()){
+            viewHolder.tv_status.setText("已按期限");
+            viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.colorBlue));
+        }else {
+            viewHolder.tv_status.setText("未按期限");
+            viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.colorRed));
+        }
+        viewHolder.tv_time.setText("更新时间：" + TimeUtils.convert2String(entry.getUpdateTime()));
         return view;
     }
 
