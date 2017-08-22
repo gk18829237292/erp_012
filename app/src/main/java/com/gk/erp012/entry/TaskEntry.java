@@ -3,11 +3,13 @@ package com.gk.erp012.entry;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by ke.gao on 2017/8/3.
  */
 
-public class TaskEntry {
+public class TaskEntry implements Serializable{
 
     private String taskId;
     private String taskName;

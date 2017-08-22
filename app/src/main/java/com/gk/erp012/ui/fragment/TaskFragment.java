@@ -2,6 +2,7 @@ package com.gk.erp012.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.gk.erp012.R;
 import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.TaskEntry;
+import com.gk.erp012.ui.TaskDetailsActivity;
 import com.gk.erp012.ui.adapter.TaskAdapter;
 import com.gk.erp012.ui.view.HRPopWinwods;
 import com.gk.erp012.utils.CustomRequest;
@@ -77,7 +80,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mContext = getActivity();
@@ -121,10 +124,10 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                 ToastUtils.showShortToast(mContext, "更新任务中");
                 btn_select_depart.setText("部门选择");
                 btn_select_type.setText("部门分类选择");
-                taskEntries.clear();
+
                 //清空操作
                 getTasks();
-                departTypes.clear();
+
             }
         });
         taskAdapter = new TaskAdapter(mContext,taskEntries);
@@ -132,6 +135,16 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         if(!ErpApplication.getInstance().getUserEntry().canAddTask()){
             btn_add_task.setVisibility(View.GONE);
         }
+        lv_task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(mContext, TaskDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("task",taskEntries.get(i));
+                intent.putExtra("task",bundle);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -157,6 +170,11 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     }
 
     private void getTasks() {
+
+        departTypeEntries.clear();
+        taskEntries.clear();
+        departTypes.clear();
+
         Map<String, String> params = new HashMap<>();
         params.put("account", ErpApplication.getInstance().getUserEntry().getAccount());
         params.put("type", ErpApplication.getInstance().getUserEntry().getType());
