@@ -43,4 +43,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
+
+
+    compile 'ch.ielse:imagewatcher:1.0.3'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
