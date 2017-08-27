@@ -223,7 +223,6 @@ public class TaskDetailsActivity extends BaseActivity {
             return;
         }
         // TODO: 更新成功
-        Log.d("GK taskReportEntries",taskReportEntries.toString());
         updateShow();
         hrPopWinwods.update(hrStringList);
     }
