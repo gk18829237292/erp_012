@@ -254,13 +254,16 @@
             android:background="@color/colorWhite"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_selectPicture"
                 android:padding="6dp"
                 android:text="工作照片（非必选）："
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <com.gk.erp012.ui.view.NoScroolGridView
+                android:id="@+id/gridview"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:numColumns="3"
+                android:layout_height="wrap_content">
 
             </com.gk.erp012.ui.view.NoScroolGridView>
         </LinearLayout>

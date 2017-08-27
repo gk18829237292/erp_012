@@ -13,6 +13,7 @@ import com.gk.erp012.R;
 import com.gk.erp012.ui.TaskDetailsActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,8 +64,14 @@ public class PictureAdapter extends BaseAdapter {
         if(!imageViewMap.containsKey(position)){
             imageViewMap.put(position,viewHolder.view);
         }
-        Picasso.with(mContext).load(pics.get(position))
-                .into(viewHolder.view);
+        if(pics.get(position).startsWith("http")){
+            Picasso.with(mContext).load(pics.get(position))
+                    .into(viewHolder.view);
+        }else{
+            Picasso.with(mContext).load( new File(pics.get(position)))
+                    .into(viewHolder.view);
+        }
+
 //                viewHolder.view.setImageURI(pics.get(position));
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override

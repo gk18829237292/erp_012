@@ -47,4 +47,7 @@ dependencies {
     compile 'ch.ielse:imagewatcher:1.0.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
+
+    compile project(":photogallery")
+
 }

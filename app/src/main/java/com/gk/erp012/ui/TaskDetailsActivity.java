@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class TaskDetailsActivity extends BaseActivity {
 
     private TaskEntry taskEntry;
     private TextView tv_name,tv_goal,tv_complete,tv_allNum,tv_chairMan,tv_financing,tv_place,tv_startTime,tv_endTime,tv_report,tv_super,tv_leader;
-    public static ImageWatcher vImageWatcher;
+    public ImageWatcher vImageWatcher;
     private TextView tv_refresh,tv_report_times;
 
     private ViewPager view_pager;
@@ -140,22 +141,43 @@ public class TaskDetailsActivity extends BaseActivity {
                 .setLoader(new ImageWatcher.Loader() {
                     @Override
                     public void load(Context context, String url, final ImageWatcher.LoadCallback lc) {
-                        Picasso.with(context).load(url).into(new Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                lc.onResourceReady(bitmap);
-                            }
+                        if(url.startsWith("http")) {
+                            Picasso.with(context).load(url).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    lc.onResourceReady(bitmap);
+                                }
 
-                            @Override
-                            public void onBitmapFailed(Drawable errorDrawable) {
-                                lc.onLoadFailed(errorDrawable);
-                            }
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    lc.onLoadFailed(errorDrawable);
+                                }
 
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                lc.onLoadStarted(placeHolderDrawable);
-                            }
-                        });
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                    lc.onLoadStarted(placeHolderDrawable);
+                                }
+
+                            });
+                        }else{
+                            Picasso.with(context).load(new File(url)).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    lc.onResourceReady(bitmap);
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    lc.onLoadFailed(errorDrawable);
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                    lc.onLoadStarted(placeHolderDrawable);
+                                }
+
+                            });
+                        }
                     }
                 })
                 .create();
