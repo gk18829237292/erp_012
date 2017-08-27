@@ -1,5 +1,7 @@
 package com.gk.erp012.entry;
 
+import com.gk.erp012.Constants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,18 +109,33 @@ public class SuperEntry {
  private int star;
  */
         SuperEntry entry = new SuperEntry();
-        entry.setAdviceId(json.getString("id"));
+//        entry.setAdviceId(json.getString("id"));
         entry.setTime(json.getString("time"));
         entry.setAdviceIndex(json.getInt("adviceIndex"));
         entry.setComment(json.getString("comment"));
         JSONArray pics = json.getJSONArray("pics");
         for(int i =0;i<pics.length();i++){
-            entry.getPicture().add(pics.getString(i));
+            entry.getPicture().add(Constants.IMG_DOMAIN+pics.getString(i));
         }
         entry.setTaskId(json.getString("taskId"));
         entry.setType(json.getInt("type"));
         entry.setStar(json.getInt("star"));
-        entry.setName(json.getString("name"));
+//        entry.setName(json.getString("name"));
         return entry;
+    }
+
+    @Override
+    public String toString() {
+        return "SuperEntry{" +
+                "adviceId='" + adviceId + '\'' +
+                ", time='" + time + '\'' +
+                ", adviceIndex=" + adviceIndex +
+                ", comment='" + comment + '\'' +
+                ", picture=" + picture +
+                ", taskId='" + taskId + '\'' +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", star=" + star +
+                '}';
     }
 }

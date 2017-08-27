@@ -192,9 +192,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     @Override
     public void onResponse(JSONObject response) {
         //do refresh
-        Logger.d("success");
         try {
-            Logger.d(response.toString());
             JSONArray jsonArray = response.getJSONArray("task");
             for (int i = 0; i < jsonArray.length(); i++) {
                 DepartTypeEntry entry = DepartTypeEntry.getFormJson(jsonArray.getJSONObject(i));

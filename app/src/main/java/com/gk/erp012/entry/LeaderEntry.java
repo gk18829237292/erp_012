@@ -46,7 +46,7 @@ public class LeaderEntry {
         this.comment = comment;
     }
 
-    public static LeaderEntry getFromJson(JSONObject json) throws JSONException {
+    public static LeaderEntry getFromJson(JSONObject json){
         /**
          *     private String adviceId;
          private String time;
@@ -54,10 +54,25 @@ public class LeaderEntry {
          private String comment;
          */
         LeaderEntry entry = new LeaderEntry();
-        entry.setAdviceId(json.getString("id"));
-        entry.setTime(json.getString("time"));
-        entry.setAdviceIndex(json.getInt("adviceIndex"));
-        entry.setComment(json.getString("comment"));
+//        entry.setAdviceId(json.getString("id"));
+        try {
+//            entry.setTime(json.getString("time"));
+            entry.setAdviceIndex(json.getInt("adviceIndex"));
+            entry.setComment(json.getString("comment"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return entry;
+    }
+
+    @Override
+    public String toString() {
+        return "LeaderEntry{" +
+                "adviceId='" + adviceId + '\'' +
+                ", time='" + time + '\'' +
+                ", adviceIndex=" + adviceIndex +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

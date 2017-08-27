@@ -13,11 +13,56 @@ public class TaskReportEntry {
     SuperEntry superEntry;
     LeaderEntry leaderEntry;
 
+    public TaskReportEntry() {
+        reportEntry = null;
+        superEntry = null;
+        leaderEntry = null;
+    }
+
+    public ReportEntry getReportEntry() {
+        return reportEntry;
+    }
+
+    public void setReportEntry(ReportEntry reportEntry) {
+        this.reportEntry = reportEntry;
+    }
+
+    public SuperEntry getSuperEntry() {
+        return superEntry;
+    }
+
+    public void setSuperEntry(SuperEntry superEntry) {
+        this.superEntry = superEntry;
+    }
+
+    public LeaderEntry getLeaderEntry() {
+        return leaderEntry;
+    }
+
+    public void setLeaderEntry(LeaderEntry leaderEntry) {
+        this.leaderEntry = leaderEntry;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskReportEntry{" +
+                "reportEntry=" + reportEntry +
+                ", superEntry=" + superEntry +
+                ", leaderEntry=" + leaderEntry +
+                '}';
+    }
+
     public static TaskReportEntry getFromJson(JSONObject json) throws JSONException {
         TaskReportEntry entry = new TaskReportEntry();
-        entry.reportEntry = ReportEntry.getFromJson(json.getJSONObject("report"));
-        entry.superEntry = SuperEntry.getFromJson(json.getJSONObject("super"));
-        entry.leaderEntry = LeaderEntry.getFromJson(json.getJSONObject("leader"));
-        return null;
+        if(json.has("report")){
+            entry.reportEntry = ReportEntry.getFromJson(json.getJSONObject("report"));
+        }
+        if(json.has("super")){
+            entry.superEntry = SuperEntry.getFromJson(json.getJSONObject("super"));
+        }
+        if(json.has("leader")) {
+            entry.leaderEntry = LeaderEntry.getFromJson(json.getJSONObject("leader"));
+        }
+        return entry;
     }
 }

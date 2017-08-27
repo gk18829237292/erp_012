@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.gk.erp012.Constants;
 import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
@@ -28,6 +29,8 @@ import com.gk.erp012.ui.fragment.TaskFragment;
 import com.gk.erp012.utils.FragmentUtils;
 import com.gk.erp012.utils.Logger;
 import com.gk.erp012.utils.ToastUtils;
+
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -127,5 +130,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
     }
 }

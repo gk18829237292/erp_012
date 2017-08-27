@@ -28,10 +28,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
+                    android:id="@+id/tv_report"
                     android:inputType="textMultiLine"
                     android:minLines="4"
                     android:scrollbars="vertical"
-                    android:layout_gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -42,12 +42,12 @@
                     android:layout_width="wrap_content"
                     android:padding="6dp"
                     android:layout_height="wrap_content" />
-                <GridView
+                <com.gk.erp012.ui.view.NoScroolGridView
                     android:id="@+id/grid_view_pics"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="wrap_content"
                     android:numColumns="3">
-                </GridView>
+                </com.gk.erp012.ui.view.NoScroolGridView>
             </LinearLayout>
         </LinearLayout>
 

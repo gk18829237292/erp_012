@@ -1,9 +1,12 @@
 package com.gk.erp012.entry;
 
+import com.gk.erp012.Constants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +17,7 @@ public class ReportEntry{
     String reportId;
     String taskId;
     String comment;
-    List<String> picture;
+    List<String> picture = new ArrayList<>();
     String reportTime;
     int reportIndex;
 
@@ -66,6 +69,18 @@ public class ReportEntry{
         this.reportIndex = reportIndex;
     }
 
+    @Override
+    public String toString() {
+        return "ReportEntry{" +
+                "reportId='" + reportId + '\'' +
+                ", taskId='" + taskId + '\'' +
+                ", comment='" + comment + '\'' +
+                ", picture=" + picture +
+                ", reportTime='" + reportTime + '\'' +
+                ", reportIndex=" + reportIndex +
+                '}';
+    }
+
     public static ReportEntry getFromJson(JSONObject json) throws JSONException {
         /**
          *    String reportId;
@@ -76,12 +91,13 @@ public class ReportEntry{
          int reportIndex;
          */
         ReportEntry entry = new ReportEntry();
-        entry.setReportId(json.getString("id"));
+//        entry.setReportId(json.getString("id"));
         entry.setReportIndex(json.getInt("reportIndex"));
         entry.setComment(json.getString("comment"));
+        entry.setReportTime(json.getString("time"));
         JSONArray pics = json.getJSONArray("pics");
         for(int i =0;i<pics.length();i++){
-            entry.getPicture().add(pics.getString(i));
+            entry.getPicture().add(Constants.IMG_DOMAIN+pics.getString(i));
         }
         entry.setTaskId(json.getString("taskId"));
         return entry;

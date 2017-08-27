@@ -29,7 +29,7 @@ import static com.gk.erp012.Constants.FLAG_LOGIN;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity  implements Response.Listener<JSONObject>,Response.ErrorListener{
+public class LoginActivity extends BaseActivity{
 
     private static final String TAG = "LoginActivity";
 

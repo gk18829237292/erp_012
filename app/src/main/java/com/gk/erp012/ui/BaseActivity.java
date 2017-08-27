@@ -4,13 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.android.volley.Response;
 import com.gk.erp012.utils.SprefUtils;
+
+import org.json.JSONObject;
 
 
 /**
  * Activity基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity  implements Response.Listener<JSONObject>,Response.ErrorListener{
 
     // 页面上下文
     public Context mContext;

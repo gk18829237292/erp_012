@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.gk.erp012.Constants;
+import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
+import com.gk.erp012.ui.TaskDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,11 +28,9 @@ public class PictureAdapter extends BaseAdapter {
     private List<ImageView> imageViews = new ArrayList<>();
     private Map<Integer,ImageView> imageViewMap = new HashMap<>();
     private List<String> pics;
-    private ImageWatcherClick callback;
-    public PictureAdapter(Context context, List<String> pics,ImageWatcherClick callback) {
+    public PictureAdapter(Context context, List<String> pics) {
         this.mContext = context;
         this.pics = pics;
-        this.callback = callback;
     }
 
     @Override
@@ -54,10 +55,13 @@ public class PictureAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_pic,parent,false);
             viewHolder.view = (ImageView) convertView.findViewById(R.id.view_photo);
-            imageViewMap.put(position,viewHolder.view);
+//            imageViewMap.put(position,viewHolder.view);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
+        }
+        if(!imageViewMap.containsKey(position)){
+            imageViewMap.put(position,viewHolder.view);
         }
         Picasso.with(mContext).load(pics.get(position))
                 .into(viewHolder.view);
@@ -69,20 +73,25 @@ public class PictureAdapter extends BaseAdapter {
                 for(int i =0;i<pics.size();i++){
                     imageViews.add(imageViewMap.get(i));
                 }
-//                        imageViews.addAll(imageViewMap.values());
-                callback.show(imageViews.get(position),imageViews,pics);
+
+                ErpApplication.getInstance().getImageWatcher().show(imageViews.get(position),imageViews,pics);
             }
         });
         return convertView;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+////        imageViewMap.clear();
+//        imageViews.clear();
+//        for(int i =0;i<getCount();i++){
+//            imageViews.add(new ImageView(mContext));
+//        }
+    }
+
     class ViewHolder{
         ImageView view;
     }
-
-    public interface ImageWatcherClick{
-        void show(ImageView view,List<ImageView> imageViews,List<String> urlList);
-    }
-
 
 }
