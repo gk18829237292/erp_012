@@ -26,6 +26,7 @@ import com.gk.erp012.R;
 import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.TaskEntry;
+import com.gk.erp012.ui.CreateTaskActivity;
 import com.gk.erp012.ui.TaskDetailsActivity;
 import com.gk.erp012.ui.adapter.TaskAdapter;
 import com.gk.erp012.ui.view.HRPopWinwods;
@@ -145,6 +146,12 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
                 startActivity(intent);
             }
         });
+        view.findViewById(R.id.btn_add_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createTask();
+            }
+        });
         return view;
     }
 
@@ -217,5 +224,12 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
 
     public void updateShow(){
         taskAdapter.notifyDataSetChanged();
+    }
+
+    private void createTask(){
+        Intent intent = new Intent(mContext, CreateTaskActivity.class);
+//        intent.putExtra("data",departEntries);
+        ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
+        startActivity(intent);
     }
 }

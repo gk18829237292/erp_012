@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by ke.gao on 2017/8/3.
  */
 
-public class DepartTypeEntry {
+public class DepartTypeEntry implements Serializable{
     private String name;
     private String id;
     private List<DepartEntry> departs = new ArrayList<>();

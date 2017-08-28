@@ -4,14 +4,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ke.gao on 2017/8/3.
  */
 
-public class DepartEntry {
+public class DepartEntry implements Serializable{
     private String name;
     private String id;
     private List<TaskEntry> tasks = new ArrayList<>();

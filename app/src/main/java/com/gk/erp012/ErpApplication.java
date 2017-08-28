@@ -8,11 +8,15 @@ import android.graphics.drawable.Drawable;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.UserEntry;
 import com.gk.erp012.ui.TaskDetailsActivity;
 import com.gk.erp012.utils.SprefUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.ielse.view.imagewatcher.ImageWatcher;
 
@@ -26,6 +30,16 @@ public class ErpApplication extends Application {
     private UserEntry userEntry;
     private RequestQueue mRequestQueue;
     private ImageWatcher mImageWatcher;
+
+    public List<DepartTypeEntry> getDepartTypeEntries() {
+        return departTypeEntries;
+    }
+
+    public void setDepartTypeEntries(List<DepartTypeEntry> departTypeEntries) {
+        this.departTypeEntries = departTypeEntries;
+    }
+
+    private List<DepartTypeEntry> departTypeEntries;
     @Override
     public void onCreate() {
         super.onCreate();

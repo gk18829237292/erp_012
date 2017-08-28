@@ -25,18 +25,18 @@
             android:label="@string/title_activity_main"
             android:theme="@style/ErpTheme.NoActionBar" />
         <activity android:name=".ui.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.TaskDetailsActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.CreateTaskActivity"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
