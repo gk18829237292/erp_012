@@ -6,8 +6,8 @@ package com.gk.erp012;
 
 public class Constants {
 
-//    public static final String WEB_SITE ="http://192.168.1.101:8080/ERP_011/";
-    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
+    public static final String WEB_SITE ="http://192.168.1.110:8080/ERP_011/";
+//    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
 //    public static final String WEB_SITE ="http://172.17.12.1:8080/ERP_001/";
     public static final String API_DOMAIN = WEB_SITE+"api/";
     public static final String IMG_DOMAIN = WEB_SITE+"img/";
@@ -15,6 +15,7 @@ public class Constants {
     public static final String METHOD_ACCOUNT_AUTHORIZE = API_DOMAIN  + "LoginServlet";
 
     public static final String METHOD_GETALL_TASK = API_DOMAIN+"getAllTask";
+    public static final String METHOD_DELETE_TASK = API_DOMAIN+"deleteTask";
     public static final String METHOD_GET_REPORT = API_DOMAIN+"getReport";
     //验证1
     public static final String METHOD_TASK_INSERT = API_DOMAIN + "creatTask";
@@ -28,12 +29,12 @@ public class Constants {
     public static final String GET_REPORT_ALL = API_DOMAIN +"GetAllReport";
 
     public static final String CREATE_REPORT = API_DOMAIN +"createReport";
+    public static final String CREATE_TASK = API_DOMAIN +"createtask";
     public static final String CREATE_SUPERVISE = API_DOMAIN +"createSuper";
 
     public static final String UPDATE_TASK = API_DOMAIN+"updateTask";
 
 
-    public static final String DELETE_TASK = API_DOMAIN + "deleteTask";
     public static final String DELETE_DEPART = API_DOMAIN + "deleteDepart";
 
     public final static String FLAG_LOGIN="FLAG_LOGIN";

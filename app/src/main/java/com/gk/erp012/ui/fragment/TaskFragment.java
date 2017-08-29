@@ -3,20 +3,17 @@ package com.gk.erp012.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.view.accessibility.AccessibilityManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,7 +25,7 @@ import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.TaskEntry;
 import com.gk.erp012.ui.CreateTaskActivity;
 import com.gk.erp012.ui.TaskDetailsActivity;
-import com.gk.erp012.ui.adapter.TaskAdapter;
+import com.gk.erp012.ui.adapter.TaskAdapter2;
 import com.gk.erp012.ui.view.HRPopWinwods;
 import com.gk.erp012.utils.CustomRequest;
 import com.gk.erp012.utils.Logger;
@@ -42,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,9 +57,11 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     private List<DepartTypeEntry> departTypeEntries = new ArrayList<>();
     private List<DepartEntry> departEntries = null;
     private List<TaskEntry> taskEntries = new ArrayList<>();
-    private TaskAdapter taskAdapter;
+    private TaskAdapter2 taskAdapter;
     private static final int MAXTASK = 20;
     private FloatingActionButton btn_add_task;
+    private SweetAlertDialog pDialog;
+
     public TaskFragment() {
         // Required empty public constructor
     }
@@ -93,6 +94,10 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         btn_select_type.setOnClickListener(this);
         btn_select_depart.setOnClickListener(this);
         lv_content = view.findViewById(R.id.container_items);
+        pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("删除中");
+        pDialog.setCancelable(false);
         typePop = new HRPopWinwods(mContext, "") {
             @Override
             public void onItemClickIt(int position) {
@@ -131,7 +136,17 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
 
             }
         });
-        taskAdapter = new TaskAdapter(mContext,taskEntries);
+        taskAdapter = new TaskAdapter2(mContext, taskEntries, new TaskAdapter2.TaskSwipe() {
+            @Override
+            public void delete(String taskId) {
+                deleteTask(taskId);
+            }
+
+            @Override
+            public void update(int position) {
+                updateTask(position);
+            }
+        });
         lv_task.setAdapter(taskAdapter);
         if(!ErpApplication.getInstance().getUserEntry().canAddTask()){
             btn_add_task.setVisibility(View.GONE);
@@ -193,6 +208,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
     public void onErrorResponse(VolleyError error) {
         ToastUtils.showShortToast(mContext, "获取任务失败，请重试");
         Logger.d(error.getMessage());
+        pDialog.dismiss();
+
         lv_content.setRefreshing(false);
     }
 
@@ -230,6 +247,28 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         Intent intent = new Intent(mContext, CreateTaskActivity.class);
 //        intent.putExtra("data",departEntries);
         ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
+        startActivity(intent);
+    }
+
+    private void deleteTask(String taskId){
+        pDialog.show();
+        Map<String, String> params = new HashMap<>();
+        params.put("taskId",taskId);
+        CustomRequest jsonReq = new CustomRequest(Constants.METHOD_DELETE_TASK, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                pDialog.dismiss();
+                getTasks();
+            }
+        }, this);
+        ErpApplication.getInstance().addToRequestQueue(jsonReq);
+    }
+
+    private void updateTask(int position){
+        Intent intent = new Intent(mContext,CreateTaskActivity.class);
+        intent.putExtra("actionType",1);
+        ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
+        intent.putExtra("task",taskEntries.get(position));
         startActivity(intent);
     }
 }

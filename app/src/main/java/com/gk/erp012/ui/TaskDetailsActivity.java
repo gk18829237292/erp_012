@@ -251,9 +251,13 @@ public class TaskDetailsActivity extends BaseActivity {
 
     public void updateShow(){
 
-        //更新显示
-        for(BaseFragment fragment:fragmentList){
-            fragment.update(taskReportEntries.get(currentIndex));
+        try {
+            //更新显示
+            for (BaseFragment fragment : fragmentList) {
+                fragment.update(taskReportEntries.get(currentIndex));
+            }
+        }catch (Exception e){
+
         }
 //        fragmentList.get(view_pager.getCurrentItem()).updateShow(taskReportEntries.get(currentIndex));
     }

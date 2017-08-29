@@ -17,9 +17,12 @@ import com.android.volley.VolleyError;
 import com.gk.erp012.Constants;
 import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
+import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
+import com.gk.erp012.entry.TaskEntry;
 import com.gk.erp012.ui.adapter.PictureAdapter;
 import com.gk.erp012.ui.view.HRPopWinwods;
+import com.gk.erp012.ui.view.MyProgressDialog;
 import com.gk.erp012.utils.MultipartRequest;
 import com.gk.erp012.utils.StringUtils;
 import com.gk.erp012.utils.TimeUtils;
@@ -41,14 +44,14 @@ import java.util.Map;
 import ch.ielse.view.imagewatcher.ImageWatcher;
 
 public class CreateTaskActivity extends BaseActivity {
-
+    private static final String TAG = "CreateTaskActivity";
     public ImageWatcher vImageWatcher;
     private TextView tv_selectPicture;
     private List<String> pics = new ArrayList<>();
     private GridView gridview;
     private PictureAdapter adapter;
 
-    private TextView tv_name,tv_goal,tv_chairMan,tv_financing,tv_place,tv_startTime,tv_endTime,tv_type,tv_departType,tv_depart;
+    private TextView tv_name,tv_goal,tv_chairMan,tv_finacing,tv_place,tv_startTime,tv_endTime,tv_type,tv_departType,tv_depart;
     private List<TextView> textViewList = new ArrayList<>();
     UCrop.Options options = new UCrop.Options();
 
@@ -58,14 +61,17 @@ public class CreateTaskActivity extends BaseActivity {
     private List<String> typeList = new ArrayList<String>();
     private List<DepartTypeEntry> departTypeEntries ;
     private List<String> departTypes = new ArrayList<>();
-    private List<String> departs = new ArrayList<>();
+    private List<DepartEntry> departs = new ArrayList<>();
+    private int actionType = 0;//0 insert 1 update 默认 insert
+    private TaskEntry taskEntry;
+    private MyProgressDialog pDialog;
     @Override
     public void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_create_task);
         tv_selectPicture = (TextView) findViewById(R.id.tv_selectPicture);
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
         // TODO: 2017/8/28 获取depart
-
+        pDialog = new MyProgressDialog(mContext,"提交中···",null);
         departTypeEntries = ErpApplication.getInstance().getDepartTypeEntries();
         if(departTypeEntries == null){
             finish();
@@ -74,10 +80,12 @@ public class CreateTaskActivity extends BaseActivity {
             departTypes.add(entry.getName());
         }
 
+        actionType = getIntent().getIntExtra("actionType",0);
+
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_goal = (TextView) findViewById(R.id.tv_goal);
         tv_chairMan = (TextView) findViewById(R.id.tv_chairMan);
-        tv_financing = (TextView) findViewById(R.id.tv_financing);
+        tv_finacing = (TextView) findViewById(R.id.tv_finacing);
         tv_place = (TextView) findViewById(R.id.tv_place);
         tv_startTime = (TextView) findViewById(R.id.tv_startTime);
         tv_endTime = (TextView) findViewById(R.id.tv_endTime);
@@ -88,7 +96,7 @@ public class CreateTaskActivity extends BaseActivity {
         textViewList.add(tv_name);
         textViewList.add(tv_goal);
         textViewList.add(tv_chairMan);
-        textViewList.add(tv_financing);
+        textViewList.add(tv_finacing);
         textViewList.add(tv_place);
         textViewList.add(tv_startTime);
         textViewList.add(tv_endTime);
@@ -120,7 +128,6 @@ public class CreateTaskActivity extends BaseActivity {
             @Override
             public void handle(String time) {
                 tv_startTime.setText(time);
-                tv_startTime.setTag(TimeUtils.convert2Long(time));
             }
         },"1999-1-1 00:00","2999-1-1 00:00");
         tv_startTime.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +141,6 @@ public class CreateTaskActivity extends BaseActivity {
             @Override
             public void handle(String time) {
                 tv_endTime.setText(time);
-                tv_endTime.setTag(TimeUtils.convert2Long(time));
             }
         },"1999-1-1 00:00","2999-1-1 00:00");
 
@@ -148,12 +154,14 @@ public class CreateTaskActivity extends BaseActivity {
         departTypePop = new HRPopWinwods(mContext,departTypes) {
             @Override
             public void onItemClickIt(int position) {
+                tv_depart.setText("");
+                tv_depart.setTag("");
                 DepartTypeEntry entry = departTypeEntries.get(position);
                 departPop.update(entry.getDepartNameList());
                 tv_departType.setText(entry.getName());
                 tv_departType.setTag(entry.getId());
-                departs = entry.getDepartNameList();
-                departPop.update(departs);
+                departPop.update(entry.getDepartNameList());
+                departs = entry.getDeparts();
             }
         };
         tv_departType.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +174,8 @@ public class CreateTaskActivity extends BaseActivity {
         departPop = new HRPopWinwods(mContext,"") {
             @Override
             public void onItemClickIt(int position) {
-
+                tv_depart.setText(departs.get(position).getName());
+                tv_depart.setTag(departs.get(position).getId());
             }
         };
 
@@ -253,6 +262,20 @@ public class CreateTaskActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
+        if(actionType == 1){
+            taskEntry = (TaskEntry) getIntent().getSerializableExtra("task");
+
+            tv_name.setText(taskEntry.getTaskName());
+            tv_place.setText(taskEntry.getPlace());
+            tv_finacing.setText(taskEntry.getFinancing());
+            tv_chairMan.setText(taskEntry.getChairMan());
+            tv_goal.setText(taskEntry.getGoal());
+//            tv_name.setText(taskEntry.getTaskName());
+//            tv_name.setText(taskEntry.getTaskName());
+//            tv_name.setText(taskEntry.getTaskName());
+        }
+
         adapter = new PictureAdapter(mContext,pics);
         gridview.setAdapter(adapter);
     }
@@ -260,46 +283,57 @@ public class CreateTaskActivity extends BaseActivity {
     private void submit(){
         String name = tv_name.getText().toString();
         String place = tv_place.getText().toString();
-        String financing = tv_financing.getText().toString();
+        String financing = tv_finacing.getText().toString();
         String chairMan = tv_chairMan.getText().toString();
-        String type = tv_type.getText().toString();
-        String startTime = tv_startTime.getTag().toString();
-        String endTime = tv_endTime.getTag().toString();
-        String departType = tv_departType.getTag().toString();
-        String depart = tv_depart.getTag().toString();
+        String type = tv_type.getTag().toString();
+        String startTime = tv_startTime.getText().toString();
+        String endTime = tv_endTime.getText().toString();
+        String departClassId = tv_departType.getTag().toString();
+        String departId = tv_depart.getTag().toString();
         String goal = tv_goal.getText().toString();
 
-        if(StringUtils.isListSpace(name,place,financing,chairMan,type,startTime,endTime,departType,depart,goal)){
+        if(StringUtils.isListSpace(name,place,financing,chairMan,type,startTime,endTime,departClassId,departId,goal)){
             ToastUtils.showShortToast(mContext,"请把信息填写完整");
             return;
         }
-
+        pDialog.show();
         Map<String,String> params = new HashMap<>();
+        params.put("name",name);
         params.put("place",place);
         params.put("financing",financing);
         params.put("chairMan",chairMan);
         params.put("type",type);
         params.put("startTime",startTime);
         params.put("endTime",endTime);
-        params.put("departType",departType);
-        params.put("depart",depart);
+        params.put("departClassId",departClassId);
+        params.put("departId",departId);
         params.put("goal",goal);
+        params.put("actionType",actionType+"");
+        if(taskEntry != null){
+            params.put("taskId",taskEntry.getTaskId());
+        }
+        Log.d(TAG,params.toString());
         List<File> fileList = new ArrayList<>();
         for(String pic:pics){
             fileList.add(new File(pic));
         }
-        MultipartRequest jsonReq = new MultipartRequest(Constants.CREATE_REPORT,this,this,"fileList",fileList,params);
+        MultipartRequest jsonReq = new MultipartRequest(Constants.CREATE_TASK,this,this,"fileList",fileList,params);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        Log.d(TAG,"error " + error.getMessage());
+        ToastUtils.showShortToast(mContext,"创建失败");
+        pDialog.dismiss();
     }
 
     @Override
     public void onResponse(JSONObject response) {
-
+        pDialog.dismiss();
+        ToastUtils.showShortToast(mContext,"创建成功");
+        Log.d(TAG,"success " + response.toString());
+        finish();
     }
 
     @Override
