@@ -1,6 +1,7 @@
 package com.gk.erp012.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -254,7 +255,7 @@ public class TaskDetailsActivity extends BaseActivity {
         try {
             //更新显示
             for (BaseFragment fragment : fragmentList) {
-                fragment.update(taskReportEntries.get(currentIndex));
+                fragment.update(taskReportEntries.get(currentIndex),currentIndex+1,Integer.parseInt(taskEntry.getTaskId()));
             }
         }catch (Exception e){
 
@@ -266,6 +267,18 @@ public class TaskDetailsActivity extends BaseActivity {
     public void onBackPressed() {
         if(!vImageWatcher.handleBackPressed()) {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK) return;
+        switch (requestCode){
+            case ReportFragment.CREATE_REPORT:
+            case SuperFragment.CREATE_SUPER:
+            case LeaderFragment.CREATE_LEADER:
+                refresh();
+                break;
         }
     }
 }

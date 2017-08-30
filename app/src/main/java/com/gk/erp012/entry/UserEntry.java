@@ -17,6 +17,25 @@ public class UserEntry {
     private String type="";//0 监督者 1 管理者 2 执行者 3 领导
     private String name="";
     private String telNum="";
+    private String departId;
+    private String departName;
+
+    public String getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(String departId) {
+        this.departId = departId;
+    }
+
+    public String getDepartName() {
+        return departName;
+    }
+
+    public void setDepartName(String departName) {
+        this.departName = departName;
+    }
+
     public UserEntry() {
     }
 
@@ -26,6 +45,16 @@ public class UserEntry {
         this.password = password;
         this.telNum = telNum;
         this.type = type;
+    }
+
+    public UserEntry(String account, String password, String type, String name, String telNum, String departId, String departName) {
+        this.account = account;
+        this.password = password;
+        this.type = type;
+        this.name = name;
+        this.telNum = telNum;
+        this.departId = departId;
+        this.departName = departName;
     }
 
     public String getAccount() {
@@ -80,6 +109,8 @@ public class UserEntry {
         sprefUtils.put("type",type);
         sprefUtils.put("name",name);
         sprefUtils.put("telNum",telNum);
+        sprefUtils.put("departId",departId);
+        sprefUtils.put("departName",departName);
         sprefUtils.commit();
         sprefUtils.apply();
     }
@@ -93,7 +124,9 @@ public class UserEntry {
         if(StringUtils.isListSpace(account,password,type)){
             return null;
         }
-        return new UserEntry(account,password,type,telNum,name);
+        String departId = sprefUtils.getString("departId","");
+        String departName = sprefUtils.getString("departName","");
+        return new UserEntry(account,password,type,telNum,name,"","");
     }
 
     public static UserEntry emptyUser= new UserEntry();
@@ -113,7 +146,9 @@ public class UserEntry {
             String name = jsonObject.getString("name");
             String telNum = jsonObject.getString("telNum");
             if(!StringUtils.isListSpace(account,password,type)){
-                userEntry = new UserEntry(account,password,type,telNum,name);
+                String departId = jsonObject.getString("departId");
+                String departName = jsonObject.getString("departName");
+                userEntry = new UserEntry(account,password,type,telNum,name,departId,departName);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -144,6 +179,19 @@ public class UserEntry {
 
     public boolean isAdmin(){
         return type.equals("0");
+    }
+
+
+    public boolean isZhixingzhe(){
+        return type.equals("2");
+    }
+
+    public boolean isLeader(){
+        return type.equals("3");
+    }
+
+    public boolean isGuanlizhe(){
+        return type.equals("0") || type.equals("1");
     }
 
     @Override

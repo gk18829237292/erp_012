@@ -37,6 +37,12 @@ dependencies {
     })
 
 
+
+    compile project(":photogallery")
+    compile project(":timeselector")
+
+
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
@@ -50,13 +56,7 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     compile 'ch.ielse:imagewatcher:1.0.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    testCompile 'junit:junit:4.12'
-
-    compile project(":photogallery")
-    compile project(":timeselector")
-
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'cn.pedant.sweetalert:library:1.3'
-
-
+    testCompile 'junit:junit:4.12'
 }

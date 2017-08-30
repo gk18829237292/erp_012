@@ -28,6 +28,8 @@ public class Constants {
 
     public static final String GET_REPORT_ALL = API_DOMAIN +"GetAllReport";
 
+    public static final String CREATE_SUPER = API_DOMAIN +"createSuper";
+    public static final String CREATE_LEADER = API_DOMAIN +"createLeader";
     public static final String CREATE_REPORT = API_DOMAIN +"createReport";
     public static final String CREATE_TASK = API_DOMAIN +"createtask";
     public static final String CREATE_SUPERVISE = API_DOMAIN +"createSuper";

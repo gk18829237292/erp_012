@@ -200,6 +200,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         Map<String, String> params = new HashMap<>();
         params.put("account", ErpApplication.getInstance().getUserEntry().getAccount());
         params.put("type", ErpApplication.getInstance().getUserEntry().getType());
+//        params.put("depart",ErpApplication.getInstance().getUserEntry().get)
         CustomRequest jsonReq = new CustomRequest(Constants.METHOD_GETALL_TASK, params, this, this);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
     }

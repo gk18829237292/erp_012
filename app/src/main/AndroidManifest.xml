@@ -9,9 +9,9 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".ErpApplication"
@@ -21,8 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ErpTheme"
-        tools:replace="android:icon"
-        >
+        tools:replace="android:icon">
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main"
@@ -37,10 +36,12 @@
         <activity
             android:name=".ui.TaskDetailsActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.CreateTaskActivity"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+        <activity
+            android:name=".ui.CreateTaskActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.CreateReportActivity" />
+        <activity android:name=".ui.CreateSuperActivity" />
+        <activity android:name=".ui.CreateLeaderActivity"></activity>
     </application>
 
 </manifest>

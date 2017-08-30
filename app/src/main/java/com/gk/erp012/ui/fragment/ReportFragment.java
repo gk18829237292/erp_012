@@ -1,27 +1,22 @@
 package com.gk.erp012.ui.fragment;
 
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
 import com.gk.erp012.entry.ReportEntry;
 import com.gk.erp012.entry.TaskReportEntry;
+import com.gk.erp012.ui.CreateReportActivity;
 import com.gk.erp012.ui.adapter.PictureAdapter;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +35,8 @@ public class ReportFragment extends BaseFragment {
     private List<String> pics = new ArrayList<>();
     private boolean updateFlag = false;
     private ReportEntry reportEntry;
-
+    private int index,taskId;
+    public static final int CREATE_REPORT = 983;
     public ReportFragment() {
         // Required empty public constructor
     }
@@ -71,9 +67,16 @@ public class ReportFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void update(TaskReportEntry taskReportEntry, int index,int taskId) {
+        update(taskReportEntry);
+        this.index = index;
+        this.taskId = taskId;
+    }
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
 
@@ -82,6 +85,23 @@ public class ReportFragment extends BaseFragment {
         adapter = new PictureAdapter(getContext(), pics);
         gridView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        //
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        //判断是否该显示
+        if(!ErpApplication.getInstance().getUserEntry().isZhixingzhe()){
+            fab.setVisibility(View.GONE);
+        }
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateReportActivity.class);
+//                ErpApplication.getInstance().get
+                intent.putExtra("index", index);
+                intent.putExtra("taskId",taskId);
+                getActivity().startActivityForResult(intent,CREATE_REPORT);
+            }
+        });
         return view;
     }
 

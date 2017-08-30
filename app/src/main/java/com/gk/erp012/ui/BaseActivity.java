@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.android.volley.Response;
+import com.gk.erp012.ui.view.MyProgressDialog;
 import com.gk.erp012.utils.SprefUtils;
 
 import org.json.JSONObject;
@@ -18,11 +19,14 @@ public abstract class BaseActivity extends AppCompatActivity  implements Respons
     // 页面上下文
     public Context mContext;
     public SprefUtils mSpref;
+    public MyProgressDialog mPDialog;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mContext = this;
         mSpref = new SprefUtils(mContext);
+        mPDialog = new MyProgressDialog(mContext,"请稍候···",null);
+//        mPDialog.s
 //        // 初始化控件
         initView(savedInstanceState);
 

@@ -28,6 +28,7 @@ import com.gk.erp012.ui.fragment.StuffFragment;
 import com.gk.erp012.ui.fragment.TaskFragment;
 import com.gk.erp012.utils.FragmentUtils;
 import com.gk.erp012.utils.Logger;
+import com.gk.erp012.utils.StringUtils;
 import com.gk.erp012.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -86,7 +87,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initData() {
         UserEntry entry = ErpApplication.getInstance().getUserEntry();
-        tv_name.setText(entry.getName());
+        if(!StringUtils.isSpace(entry.getDepartName())){
+            tv_name.setText(entry.getName()+"("+entry.getDepartName()+")");
+        }else{
+            tv_name.setText(entry.getName());
+        }
         tv_telNum.setText(entry.getTelNum());
 
     }

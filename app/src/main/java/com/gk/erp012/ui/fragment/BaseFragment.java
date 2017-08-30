@@ -26,4 +26,5 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract void update(TaskReportEntry taskReportEntry);
 
+    public abstract void update(TaskReportEntry taskReportEntry,int index,int taskId);
 }
