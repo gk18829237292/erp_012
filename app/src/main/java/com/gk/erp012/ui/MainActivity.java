@@ -2,20 +2,13 @@ package com.gk.erp012.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -27,7 +20,6 @@ import com.gk.erp012.ui.fragment.DepartFragment;
 import com.gk.erp012.ui.fragment.StuffFragment;
 import com.gk.erp012.ui.fragment.TaskFragment;
 import com.gk.erp012.utils.FragmentUtils;
-import com.gk.erp012.utils.Logger;
 import com.gk.erp012.utils.StringUtils;
 import com.gk.erp012.utils.ToastUtils;
 
@@ -79,6 +71,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View view) {
                 // TODO: 2017/7/30 跳转到个人信息页
+                Intent intent = new Intent(mContext,UserInfoActivity.class);
+                intent.putExtra("isMySelf",true);
+                startActivity(intent);
                 ToastUtils.showShortToast(mContext,"click me");
             }
         });
@@ -87,10 +82,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initData() {
         UserEntry entry = ErpApplication.getInstance().getUserEntry();
-        if(!StringUtils.isSpace(entry.getDepartName())){
-            tv_name.setText(entry.getName()+"("+entry.getDepartName()+")");
+        if(entry.isZhixingzhe()){
+            tv_name.setText(entry.getName_1()+"("+entry.getDepartName()+")");
         }else{
-            tv_name.setText(entry.getName());
+            tv_name.setText(entry.getName_1());
         }
         tv_telNum.setText(entry.getTelNum());
 

@@ -1,6 +1,5 @@
 package com.gk.erp012.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -70,7 +69,7 @@ public class CreateLeaderActivity extends BaseActivity {
         params.put("index_1",index+"");
         params.put("comment",content);
         params.put("taskId",taskId+"");
-        params.put("name",ErpApplication.getInstance().getUserEntry().getName());
+        params.put("name",ErpApplication.getInstance().getUserEntry().getName_1());
         CustomRequest jsonReq = new CustomRequest(Constants.CREATE_LEADER,params,this,this);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
     }

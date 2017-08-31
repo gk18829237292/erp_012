@@ -41,7 +41,11 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.CreateReportActivity" />
         <activity android:name=".ui.CreateSuperActivity" />
-        <activity android:name=".ui.CreateLeaderActivity"></activity>
+        <activity android:name=".ui.CreateLeaderActivity" />
+        <activity
+            android:name=".ui.UserInfoActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".ui.DepartListActivity"></activity>
     </application>
 
 </manifest>

@@ -6,8 +6,8 @@ package com.gk.erp012;
 
 public class Constants {
 
-    public static final String WEB_SITE ="http://192.168.1.110:8080/ERP_011/";
-//    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
+//    public static final String WEB_SITE ="http://192.168.1.110:8080/ERP_011/";
+    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
 //    public static final String WEB_SITE ="http://172.17.12.1:8080/ERP_001/";
     public static final String API_DOMAIN = WEB_SITE+"api/";
     public static final String IMG_DOMAIN = WEB_SITE+"img/";
@@ -18,6 +18,9 @@ public class Constants {
     public static final String METHOD_DELETE_TASK = API_DOMAIN+"deleteTask";
     public static final String METHOD_GET_REPORT = API_DOMAIN+"getReport";
     //验证1
+    public static final String METHOD_GETALL_DEPART = API_DOMAIN+"getAllDepart";
+
+
     public static final String METHOD_TASK_INSERT = API_DOMAIN + "creatTask";
     public static final String METHOD_DEPARTMENT_INSERT = API_DOMAIN + "CreateDepart";
 
@@ -36,6 +39,8 @@ public class Constants {
 
     public static final String UPDATE_TASK = API_DOMAIN+"updateTask";
 
+
+    public static final String UPDATE_USER = API_DOMAIN +"updateUser";
 
     public static final String DELETE_DEPART = API_DOMAIN + "deleteDepart";
 

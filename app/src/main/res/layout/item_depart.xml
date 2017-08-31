@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:clickToClose="true">
+
+    <LinearLayout
+        android:tag="Bottom1"
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="160dp"
+        android:weightSum="1"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/change"
+            android:text="编辑"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/delete"
+            android:text="删除"
+            android:background="@color/colorRed"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bt_nobgd"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+
+            <TextView
+                android:id="@+id/tv_departName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:text="GkTEST NAME"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</com.daimajia.swipe.SwipeLayout>

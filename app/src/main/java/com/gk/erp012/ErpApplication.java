@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.UserEntry;
 import com.gk.erp012.ui.TaskDetailsActivity;
@@ -30,6 +31,15 @@ public class ErpApplication extends Application {
     private UserEntry userEntry;
     private RequestQueue mRequestQueue;
     private ImageWatcher mImageWatcher;
+    public List<DepartEntry> departEntries;
+
+    public List<DepartEntry> getDepartEntries() {
+        return departEntries;
+    }
+
+    public void setDepartEntries(List<DepartEntry> departEntries) {
+        this.departEntries = departEntries;
+    }
 
     public List<DepartTypeEntry> getDepartTypeEntries() {
         return departTypeEntries;

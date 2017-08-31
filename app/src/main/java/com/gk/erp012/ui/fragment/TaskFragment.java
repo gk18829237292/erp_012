@@ -93,7 +93,6 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         btn_select_depart = view.findViewById(R.id.btn_select_depart);
         btn_select_type.setOnClickListener(this);
         btn_select_depart.setOnClickListener(this);
-        lv_content = view.findViewById(R.id.container_items);
         pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("删除中");

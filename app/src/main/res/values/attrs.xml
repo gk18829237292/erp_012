@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义Switch-->
+    <declare-styleable name="HRSwitch">
+        <!--选中时的展示-->
+        <attr name="src_checked" format="reference"/>
+        <!--未选中时的展示-->
+        <attr name="src_unchecked" format="reference"/>
+        <attr name="txt_checked" format="string"/>
+        <attr name="txt_unchecked" format="string"/>
+        <attr name="checked" format="boolean"/>
+    </declare-styleable>
+
+</resources>

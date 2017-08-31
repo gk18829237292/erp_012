@@ -81,9 +81,13 @@ public class UserEntry {
         this.type = type;
     }
 
-    public String getName() {
+    public String getName_1() {
         if(StringUtils.isSpace(name))
             return getTypeStr();
+        return name;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -148,7 +152,7 @@ public class UserEntry {
             if(!StringUtils.isListSpace(account,password,type)){
                 String departId = jsonObject.getString("departId");
                 String departName = jsonObject.getString("departName");
-                userEntry = new UserEntry(account,password,type,telNum,name,departId,departName);
+                userEntry = new UserEntry(account,password,type,name,telNum,departId,departName);
             }
         } catch (JSONException e) {
             e.printStackTrace();
