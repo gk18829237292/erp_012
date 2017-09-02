@@ -19,6 +19,11 @@ public class Constants {
     public static final String METHOD_GET_REPORT = API_DOMAIN+"getReport";
     //验证1
     public static final String METHOD_GETALL_DEPART = API_DOMAIN+"getAllDepart";
+    public static final String METHOD_GETALL_USER = API_DOMAIN+"getAllUser";
+    public static final String METHOD_ADD_DEPARTCLASS = API_DOMAIN+"createDepartClass";
+    public static final String METHOD_ADD_DEPART = API_DOMAIN+"createDepart";
+    public static final String METHOD_DELETE = API_DOMAIN+"delete";
+
 
 
     public static final String METHOD_TASK_INSERT = API_DOMAIN + "creatTask";

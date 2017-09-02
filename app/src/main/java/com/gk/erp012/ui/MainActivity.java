@@ -36,7 +36,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);
+        if(ErpApplication.getInstance().getUserEntry().isAdmin()) {
+            setContentView(R.layout.activity_main);
+        }else{
+            setContentView(R.layout.activity_main2);
+        }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -56,6 +60,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

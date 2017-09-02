@@ -20,6 +20,7 @@ import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
 import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
+import com.gk.erp012.entry.UserEntry;
 import com.gk.erp012.utils.CustomRequest;
 import com.gk.erp012.utils.ToastUtils;
 
@@ -34,20 +35,17 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DepartListActivity extends BaseActivity {
+public class StuffListActivity extends BaseActivity {
 
-    private SweetAlertDialog pDialog;
     private SwipeRefreshLayout lv_content;
     private ListView lv_task;
     private BaseAdapter adpter;
-    private List<DepartEntry> departEntryList = new ArrayList<>();
-    private List<DepartTypeEntry> departTypeEntries = new ArrayList<>();
+    private List<UserEntry> userEntries = new ArrayList<>();
 
     private int index;
     @Override
     public void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_depart_list);
-        pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
         lv_content = (SwipeRefreshLayout) findViewById(R.id.container_items);
         lv_task = (ListView) findViewById(R.id.lv_task);
         lv_content.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -78,7 +76,7 @@ public class DepartListActivity extends BaseActivity {
                                     public void onClick(SweetAlertDialog sDialog) {
                                         swipeLayout.close();
                                         sDialog.dismiss();
-                                        delete(departEntryList.get(position).getId());
+                                        delete(userEntries.get(position).getAccount());
                                     }
                                 });
                         dialog.setCanceledOnTouchOutside(true);
@@ -89,12 +87,12 @@ public class DepartListActivity extends BaseActivity {
                     @Override
                     public void onClick(View view) {
                         swipeLayout.close();
-                        Intent intent = new Intent(mContext,CreateDepartActivity.class);
-                        intent.putExtra("departId",departEntryList.get(position).getId());
-                        intent.putExtra("departName",departEntryList.get(position).getName());
-                        intent.putExtra("update",true);
-                        ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
-                        startActivity(intent);
+//                        Intent intent = new Intent(mContext,CreateDepartActivity.class);
+//                        intent.putExtra("departId",departEntryList.get(position).getId());
+//                        intent.putExtra("departName",departEntryList.get(position).getName());
+//                        intent.putExtra("update",true);
+//                        ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
+//                        startActivity(intent);
                     }
                 });
                 view.setTag(view.findViewById(R.id.tv_departName));
@@ -104,17 +102,17 @@ public class DepartListActivity extends BaseActivity {
             @Override
             public void fillValues(int position, View convertView) {
                 TextView tv_depart = (TextView) convertView.getTag();
-                tv_depart.setText(departEntryList.get(position).getName());
+                tv_depart.setText(userEntries.get(position).getAccount());
             }
 
             @Override
             public int getCount() {
-                return departEntryList.size();
+                return userEntries.size();
             }
 
             @Override
             public Object getItem(int i) {
-                return departEntryList.get(i);
+                return userEntries.get(i);
             }
 
             @Override
@@ -128,7 +126,7 @@ public class DepartListActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext,CreateDepartActivity.class);
                 intent.putExtra("departId","");
-                ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
+//                ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
                 startActivity(intent);
             }
         });
@@ -161,11 +159,10 @@ public class DepartListActivity extends BaseActivity {
 
         try {
             JSONArray jsonArray = response.getJSONArray("task");
-            departTypeEntries.clear();
-            departEntryList.clear();
+            userEntries.clear();
             for (int i = 0; i < jsonArray.length(); i++) {
-                DepartTypeEntry entry = DepartTypeEntry.getFormJson(jsonArray.getJSONObject(i));
-                departTypeEntries.add(entry);
+                UserEntry entry = UserEntry.getFromJson(jsonArray.getJSONObject(i));
+                userEntries.add(entry);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -173,20 +170,17 @@ public class DepartListActivity extends BaseActivity {
             lv_content.setRefreshing(false);
             mPDialog.dismiss();
         }
-        departEntryList.addAll(departTypeEntries.get(index).getDeparts());
         adpter.notifyDataSetChanged();
         ToastUtils.showShortToast(mContext,"成功");
     }
 
     private void getDepart() {
         mPDialog.show();
-        departTypeEntries.clear();
-        departEntryList.clear();
+        userEntries.clear();
         Map<String, String> params = new HashMap<>();
         params.put("account", ErpApplication.getInstance().getUserEntry().getAccount());
         params.put("type", ErpApplication.getInstance().getUserEntry().getType());
-//        params.put("depart",ErpApplication.getInstance().getUserEntry().get)
-        CustomRequest jsonReq = new CustomRequest(Constants.METHOD_GETALL_DEPART, params, this, this);
+        CustomRequest jsonReq = new CustomRequest(Constants.METHOD_GETALL_USER, params, this, this);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
     }
 
