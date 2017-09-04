@@ -6,7 +6,9 @@ package com.gk.erp012;
 
 public class Constants {
 
-    public static final String WEB_SITE ="http://192.168.1.110:8080/ERP_011/";
+//    public static final String WEB_SITE ="http://192.168.1.110:8080/ERP_011/";
+    public static final String WEB_SITE ="http://47.94.246.193:8080/ERP_011/";
+//    47.94.246.193
 //    public static final String WEB_SITE ="http://10.64.33.43:8080/ERP_011/";
 //    public static final String WEB_SITE ="http://172.17.12.1:8080/ERP_001/";
     public static final String API_DOMAIN = WEB_SITE+"api/";
