@@ -56,4 +56,13 @@ public class DepartEntry implements Serializable{
         return depart;
     }
 
+    public static List<DepartEntry> getListFromJson(JSONObject jsonObject) throws JSONException {
+        JSONArray jsonArray = jsonObject.getJSONArray("departs");
+        List<DepartEntry> departEntries = new ArrayList<>();
+        for(int i = 0;i<jsonArray.length();i++){
+            departEntries.add(getFormJson(jsonArray.getJSONObject(i)));
+        }
+        return departEntries;
+    }
+
 }

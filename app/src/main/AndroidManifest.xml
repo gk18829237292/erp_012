@@ -47,7 +47,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.DepartListActivity" />
         <activity android:name=".ui.CreateDepartActivity" />
-        <activity android:name=".ui.StuffListActivity"></activity>
+        <activity android:name=".ui.StuffListActivity" />
+        <activity android:name=".ui.UserDetailActivity"></activity>
+        <activity android:name=".ui.UserDetail2Activity"></activity>
     </application>
 
 </manifest>

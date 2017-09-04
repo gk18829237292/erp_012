@@ -40,13 +40,13 @@ public class StuffFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(), StuffListActivity.class);
         switch (id){
             case R.id.stuff_0:
-                intent.putExtra("type","0");
-                break;
-            case R.id.stuff_1:
                 intent.putExtra("type","1");
                 break;
-            case R.id.stuff_2:
+            case R.id.stuff_1:
                 intent.putExtra("type","2");
+                break;
+            case R.id.stuff_2:
+                intent.putExtra("type","3");
                 break;
         }
         startActivity(intent);

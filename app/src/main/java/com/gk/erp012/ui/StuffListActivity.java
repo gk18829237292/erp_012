@@ -22,6 +22,7 @@ import com.gk.erp012.entry.DepartEntry;
 import com.gk.erp012.entry.DepartTypeEntry;
 import com.gk.erp012.entry.UserEntry;
 import com.gk.erp012.utils.CustomRequest;
+import com.gk.erp012.utils.StringUtils;
 import com.gk.erp012.utils.ToastUtils;
 
 import org.json.JSONArray;
@@ -41,11 +42,11 @@ public class StuffListActivity extends BaseActivity {
     private ListView lv_task;
     private BaseAdapter adpter;
     private List<UserEntry> userEntries = new ArrayList<>();
-
-    private int index;
+    private TextView tv_title;
+    private String type;
     @Override
     public void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_depart_list);
+        setContentView(R.layout.activity_stuff_list);
         lv_content = (SwipeRefreshLayout) findViewById(R.id.container_items);
         lv_task = (ListView) findViewById(R.id.lv_task);
         lv_content.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -93,6 +94,7 @@ public class StuffListActivity extends BaseActivity {
 //                        intent.putExtra("update",true);
 //                        ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
 //                        startActivity(intent);
+                        addOrUpdate(true,userEntries.get(position));
                     }
                 });
                 view.setTag(view.findViewById(R.id.tv_departName));
@@ -120,14 +122,11 @@ public class StuffListActivity extends BaseActivity {
                 return i;
             }
         });
-
-        findViewById(R.id.btn_add_depart).setOnClickListener(new View.OnClickListener() {
+        tv_title = (TextView) findViewById(R.id.title);
+        findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext,CreateDepartActivity.class);
-                intent.putExtra("departId","");
-//                ErpApplication.getInstance().setDepartTypeEntries(departTypeEntries);
-                startActivity(intent);
+                addOrUpdate(false,null);
             }
         });
     }
@@ -140,10 +139,21 @@ public class StuffListActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        index = getIntent().getIntExtra("index",-1);
-        if(index == -1){
+        type = getIntent().getStringExtra("type");
+        if(StringUtils.isSpace(type)){
             ToastUtils.showShortToast(mContext,"异常退出");
             finish();
+        }
+        switch (type){
+            case "1":
+                tv_title.setText("督查督办人员");
+                break;
+            case "2":
+                tv_title.setText("部门镇办人员");
+                break;
+            case "3":
+                tv_title.setText("区县领导人员");
+                break;
         }
     }
 
@@ -156,14 +166,10 @@ public class StuffListActivity extends BaseActivity {
 
     @Override
     public void onResponse(JSONObject response) {
-
         try {
-            JSONArray jsonArray = response.getJSONArray("task");
+            List<UserEntry> tmp = UserEntry.getListFromJson(response);
             userEntries.clear();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                UserEntry entry = UserEntry.getFromJson(jsonArray.getJSONObject(i));
-                userEntries.add(entry);
-            }
+            userEntries.addAll(tmp);
         } catch (JSONException e) {
             e.printStackTrace();
         }finally {
@@ -171,28 +177,35 @@ public class StuffListActivity extends BaseActivity {
             mPDialog.dismiss();
         }
         adpter.notifyDataSetChanged();
-        ToastUtils.showShortToast(mContext,"成功");
     }
 
     private void getDepart() {
         mPDialog.show();
         userEntries.clear();
         Map<String, String> params = new HashMap<>();
-        params.put("account", ErpApplication.getInstance().getUserEntry().getAccount());
-        params.put("type", ErpApplication.getInstance().getUserEntry().getType());
+        params.put("type", type);
         CustomRequest jsonReq = new CustomRequest(Constants.METHOD_GETALL_USER, params, this, this);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
     }
 
     private void delete(String id){
-        String account = ErpApplication.getInstance().getUserEntry().getAccount();
-        String type = ErpApplication.getInstance().getUserEntry().getType();
         Map<String,String> params = new HashMap<>();
-        params.put("actionType","1");
-        params.put("id",id);
-        params.put("account",account);
+        params.put("account",id);
         params.put("type",type);
-        CustomRequest jsonReq = new CustomRequest(Constants.METHOD_DELETE, params, this, this);
+        CustomRequest jsonReq = new CustomRequest(Constants.METHOD_DELETE_USER, params, this, this);
         ErpApplication.getInstance().addToRequestQueue(jsonReq);
+    }
+
+    private void addOrUpdate(boolean update,UserEntry entry){
+        Intent intent = null;
+        if(type.equals("2")){
+            intent = new Intent(mContext,UserDetailActivity.class);
+        }else {
+            intent = new Intent(mContext,UserDetail2Activity.class);
+        }
+        intent.putExtra("type",type);
+        intent.putExtra("update",update);
+        intent.putExtra("user",entry);
+        startActivity(intent);
     }
 }

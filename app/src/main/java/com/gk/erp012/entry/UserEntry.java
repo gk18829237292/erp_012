@@ -4,19 +4,24 @@ package com.gk.erp012.entry;
 import com.gk.erp012.utils.SprefUtils;
 import com.gk.erp012.utils.StringUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pc_home on 2017/7/23.
  */
 
-public class UserEntry {
-    private String account="";
-    private String password="";
-    private String type="";//0 监督者 1 管理者 2 执行者 3 领导
-    private String name="";
-    private String telNum="";
+public class UserEntry implements Serializable{
+    private String account = "";
+    private String password = "";
+    private String type = "";//0 监督者 1 管理者 2 执行者 3 领导
+    private String name = "";
+    private String telNum = "";
     private String departId;
     private String departName;
 
@@ -82,7 +87,7 @@ public class UserEntry {
     }
 
     public String getName_1() {
-        if(StringUtils.isSpace(name))
+        if (StringUtils.isSpace(name))
             return getTypeStr();
         return name;
     }
@@ -103,56 +108,56 @@ public class UserEntry {
         this.telNum = telNum;
     }
 
-    public boolean canAddTask(){
+    public boolean canAddTask() {
         return type.equals("0") || type.equals("1");
     }
 
-    public void writeToSpref(SprefUtils sprefUtils){
-        sprefUtils.put("account",account);
-        sprefUtils.put("password",password);
-        sprefUtils.put("type",type);
-        sprefUtils.put("name",name);
-        sprefUtils.put("telNum",telNum);
-        sprefUtils.put("departId",departId);
-        sprefUtils.put("departName",departName);
+    public void writeToSpref(SprefUtils sprefUtils) {
+        sprefUtils.put("account", account);
+        sprefUtils.put("password", password);
+        sprefUtils.put("type", type);
+        sprefUtils.put("name", name);
+        sprefUtils.put("telNum", telNum);
+        sprefUtils.put("departId", departId);
+        sprefUtils.put("departName", departName);
         sprefUtils.commit();
         sprefUtils.apply();
     }
 
-    public static UserEntry getFromSpref(SprefUtils sprefUtils){
-        String account = sprefUtils.getString("account","");
-        String password = sprefUtils.getString("password","");
-        String type = sprefUtils.getString("type","");
-        String name = sprefUtils.getString("name","");
-        String telNum = sprefUtils.getString("telNum","");
-        if(StringUtils.isListSpace(account,password,type)){
+    public static UserEntry getFromSpref(SprefUtils sprefUtils) {
+        String account = sprefUtils.getString("account", "");
+        String password = sprefUtils.getString("password", "");
+        String type = sprefUtils.getString("type", "");
+        String name = sprefUtils.getString("name", "");
+        String telNum = sprefUtils.getString("telNum", "");
+        if (StringUtils.isListSpace(account, password, type)) {
             return null;
         }
-        String departId = sprefUtils.getString("departId","");
-        String departName = sprefUtils.getString("departName","");
-        return new UserEntry(account,password,type,telNum,name,"","");
+        String departId = sprefUtils.getString("departId", "");
+        String departName = sprefUtils.getString("departName", "");
+        return new UserEntry(account, password, type, telNum, name, "", "");
     }
 
-    public static UserEntry emptyUser= new UserEntry();
+    public static UserEntry emptyUser = new UserEntry();
 
-    public static void clearSpref(SprefUtils sprefUtils){
+    public static void clearSpref(SprefUtils sprefUtils) {
         emptyUser.writeToSpref(sprefUtils);
     }
 
-    public static UserEntry getFromJson(JSONObject jsonObject){
+    public static UserEntry getFromJson(JSONObject jsonObject) {
 
-        if(jsonObject.has("error")) return null;
-        UserEntry userEntry=null;
+        if (jsonObject.has("error")) return null;
+        UserEntry userEntry = null;
         try {
             String account = jsonObject.getString("account");
             String password = jsonObject.getString("password");
             String type = jsonObject.getString("type");
             String name = jsonObject.getString("name");
             String telNum = jsonObject.getString("telNum");
-            if(!StringUtils.isListSpace(account,password,type)){
+            if (!StringUtils.isListSpace(account, password, type)) {
                 String departId = jsonObject.getString("departId");
                 String departName = jsonObject.getString("departName");
-                userEntry = new UserEntry(account,password,type,name,telNum,departId,departName);
+                userEntry = new UserEntry(account, password, type, name, telNum, departId, departName);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -162,39 +167,48 @@ public class UserEntry {
 
     }
 
-    public String getTypeStr(){
-        String result ="";
-        switch (type){
+    public static List<UserEntry> getListFromJson(JSONObject jsonObject) throws JSONException {
+        List<UserEntry> userEntries = new ArrayList<>();
+        JSONArray array = jsonObject.getJSONArray("users");
+        for(int i =0;i<array.length();i++){
+            userEntries.add(UserEntry.getFromJson(array.getJSONObject(i)));
+        }
+        return userEntries;
+    }
+
+    public String getTypeStr() {
+        String result = "";
+        switch (type) {
             case "0"://管理员
                 result = "管理员";
                 break;
             case "1":
-                result="监督者";
+                result = "监督者";
                 break;
             case "2":
-                result="执行者";
+                result = "执行者";
                 break;
             case "3":
-                result="领导";
+                result = "领导";
                 break;
         }
         return result;
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return type.equals("0");
     }
 
 
-    public boolean isZhixingzhe(){
+    public boolean isZhixingzhe() {
         return type.equals("2");
     }
 
-    public boolean isLeader(){
+    public boolean isLeader() {
         return type.equals("3");
     }
 
-    public boolean isGuanlizhe(){
+    public boolean isGuanlizhe() {
         return type.equals("0") || type.equals("1");
     }
 

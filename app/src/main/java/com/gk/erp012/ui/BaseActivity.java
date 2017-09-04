@@ -25,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity  implements Respons
 
         mContext = this;
         mSpref = new SprefUtils(mContext);
-        mPDialog = new MyProgressDialog(mContext,"请稍候···",null);
+        mPDialog = new MyProgressDialog(mContext,"加载中···",null);
 //        mPDialog.s
 //        // 初始化控件
         initView(savedInstanceState);
