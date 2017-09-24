@@ -36,13 +36,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add_departClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorFense"
-        app:borderWidth="0dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        style="@style/Widget.MaterialSheetFab.Fab"
+        android:backgroundTint="@color/colorFense" />
 
 </RelativeLayout>

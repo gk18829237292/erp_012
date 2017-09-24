@@ -175,7 +175,7 @@ public class DepartListActivity extends BaseActivity {
         }
         departEntryList.addAll(departTypeEntries.get(index).getDeparts());
         adpter.notifyDataSetChanged();
-        ToastUtils.showShortToast(mContext,"成功");
+//        ToastUtils.showShortToast(mContext,"成功");
     }
 
     private void getDepart() {

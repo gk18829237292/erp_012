@@ -115,7 +115,7 @@ public class CreateReportActivity extends BaseActivity {
     @Override
     public void onResponse(JSONObject response) {
         mPDialog.dismiss();
-        ToastUtils.showShortToast(mContext,"成功");
+//        ToastUtils.showShortToast(mContext,"成功");
         setResult(RESULT_OK);
         finish();
     }

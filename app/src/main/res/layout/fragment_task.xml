@@ -35,15 +35,15 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="64dp"
+        android:padding="1dp"
         android:orientation="vertical"
         >
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_add_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialSheetFab.Fab"
             android:backgroundTint="@color/colorFense"
-            app:borderWidth="0dp"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            android:layout_margin="0dp"
+             />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

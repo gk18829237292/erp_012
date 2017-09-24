@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="ErpTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -16,6 +16,19 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.MaterialSheetFab.Fab" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/fab_elevation</item>
+        <item name="android:src">@android:drawable/ic_input_add</item>
+        <item name="borderWidth">0dp</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
 
 
 </resources>

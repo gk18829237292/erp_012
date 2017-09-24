@@ -198,7 +198,7 @@ public class DepartFragment extends Fragment implements Response.Listener<JSONOb
             pDialog.dismiss();
         }
         adpter.notifyDataSetChanged();
-        ToastUtils.showShortToast(mContext,"成功");
+//        ToastUtils.showShortToast(mContext,"成功");
 
     }
     private void showAlertDialog(final boolean update, String name, final String departClassId) {
