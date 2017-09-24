@@ -91,7 +91,7 @@ public class TaskAdapter2 extends BaseSwipeAdapter {
             viewHolder.tv_status.setText("未按期限");
             viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.colorRed));
         }
-        viewHolder.tv_time.setText("更新时间：" + TimeUtils.convert2String(entry.getUpdateTime()));
+        viewHolder.tv_time.setText( TimeUtils.convert2String(entry.getStartTime()) +" 创建");
     }
 
     @Override

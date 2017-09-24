@@ -108,6 +108,21 @@ public class TaskEntry implements Serializable{
         return reportType;
     }
 
+    public String getReportType_1() {
+        // -- 0日报 1 周报，2半月报，3月报，4季报，5 半年报，6年报--
+        String result  ="";
+        switch (reportType){
+            case "0":result="日报";break;
+            case "1":result="周报";break;
+            case "2":result="半月报";break;
+            case "3":result="月报";break;
+            case "4":result="季报";break;
+            case "5":result="半年报";break;
+            case "6":result="年报";break;
+        }
+        return result;
+    }
+
     public void setReportType(String reportType) {
         this.reportType = reportType;
     }

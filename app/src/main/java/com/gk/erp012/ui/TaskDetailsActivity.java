@@ -91,7 +91,7 @@ public class TaskDetailsActivity extends BaseActivity {
 //        tv_complete.setText("");
 //        tv_allNum.setText(");
         tv_chairMan.setText(taskEntry.getChairMan());
-        tv_financing.setText(taskEntry.getFinancing());
+        tv_financing.setText(taskEntry.getReportType_1());
         tv_place.setText(taskEntry.getPlace());
         tv_startTime.setText(TimeUtils.convert2String(taskEntry.getStartTime()));
         tv_endTime.setText(TimeUtils.convert2String(taskEntry.getEndTime()));

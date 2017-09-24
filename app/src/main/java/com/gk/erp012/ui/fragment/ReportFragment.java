@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.gk.erp012.ErpApplication;
 import com.gk.erp012.R;
@@ -17,6 +18,7 @@ import com.gk.erp012.entry.ReportEntry;
 import com.gk.erp012.entry.TaskReportEntry;
 import com.gk.erp012.ui.CreateReportActivity;
 import com.gk.erp012.ui.adapter.PictureAdapter;
+import com.gk.erp012.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class ReportFragment extends BaseFragment {
     private GridView gridView;
     private PictureAdapter adapter;
     private EditText tv_report;
+    private TextView tv_reportTime;
     private List<String> pics = new ArrayList<>();
     private boolean updateFlag = false;
     private ReportEntry reportEntry;
@@ -57,8 +60,10 @@ public class ReportFragment extends BaseFragment {
             if (reportEntry != null) {
                 pics.addAll(reportEntry.getPicture());
                 tv_report.setText(reportEntry.getComment());
+                tv_reportTime.setText(TimeUtils.convert2String(reportEntry.getReportTime()));
             } else {
                 tv_report.setText("");
+                tv_reportTime.setText("");
             }
             adapter.notifyDataSetChanged();
         }catch (Exception e){
@@ -82,6 +87,7 @@ public class ReportFragment extends BaseFragment {
 
         gridView = view.findViewById(R.id.grid_view_pics);
         tv_report = view.findViewById(R.id.tv_report);
+        tv_reportTime = view.findViewById(R.id.tv_reportTime);
         adapter = new PictureAdapter(getContext(), pics);
         gridView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
