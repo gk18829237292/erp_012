@@ -150,6 +150,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
         if(!ErpApplication.getInstance().getUserEntry().canAddTask()){
             btn_add_task.setVisibility(View.GONE);
         }
+        lv_task.setEmptyView(view.findViewById(R.id.empty_view));
         lv_task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
