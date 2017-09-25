@@ -127,8 +127,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Resp
             @Override
             public void onRefresh() {
                 ToastUtils.showShortToast(mContext, "更新任务中");
-                btn_select_depart.setText("部门选择");
-                btn_select_type.setText("部门分类选择");
+                btn_select_depart.setText("工作分类");
+                btn_select_type.setText("责任单位");
 
                 //清空操作
                 getTasks();

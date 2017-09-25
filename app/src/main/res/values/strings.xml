@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">执行力管理云平台(试用版)</string>
+    <string name="app_name">执行力管理云平台</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
