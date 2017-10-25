@@ -68,22 +68,22 @@ public class PictureAdapter extends BaseAdapter {
             Picasso.with(mContext).load(pics.get(position))
                     .into(viewHolder.view);
         }else{
-            Picasso.with(mContext).load( new File(pics.get(position)))
+            Picasso.with(mContext).load(new File(pics.get(position)))
                     .into(viewHolder.view);
         }
 
 //                viewHolder.view.setImageURI(pics.get(position));
-        viewHolder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageViews.clear();
-                for(int i =0;i<pics.size();i++){
-                    imageViews.add(imageViewMap.get(i));
-                }
-
-                ErpApplication.getInstance().getImageWatcher().show(imageViews.get(position),imageViews,pics);
-            }
-        });
+//        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageViews.clear();
+//                for(int i =0;i<pics.size();i++){
+//                    imageViews.add(imageViewMap.get(i));
+//                }
+//
+//                ErpApplication.getInstance().getImageWatcher().show(imageViews.get(position),imageViews,pics);
+//            }
+//        });
         return convertView;
     }
 

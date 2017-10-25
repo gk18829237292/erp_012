@@ -1,5 +1,6 @@
 package com.wq.photo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -338,7 +339,10 @@ public class MediaChoseActivity extends ActionBarActivity {
     public void sendStarCamera() {
         currentfile = getTempFile();
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
+        ContentValues contentValues = new ContentValues(1);
+        contentValues.put(MediaStore.Images.Media.DATA, currentfile.getAbsolutePath());
+        Uri uri = getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }

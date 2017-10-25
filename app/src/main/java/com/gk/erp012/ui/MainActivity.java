@@ -1,5 +1,6 @@
 package com.gk.erp012.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.gk.erp012.ui.fragment.DepartFragment;
 import com.gk.erp012.ui.fragment.StuffFragment;
 import com.gk.erp012.ui.fragment.TaskFragment;
 import com.gk.erp012.utils.FragmentUtils;
+import com.gk.erp012.utils.Permission;
 import com.gk.erp012.utils.StringUtils;
 import com.gk.erp012.utils.ToastUtils;
 
@@ -36,6 +38,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        String perms[] = {
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.INTERNET
+        };
+        Permission.requestPermissionsIfNeed(this, perms);
         if(ErpApplication.getInstance().getUserEntry().isAdmin()) {
             setContentView(R.layout.activity_main);
         }else{

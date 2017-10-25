@@ -51,7 +51,7 @@ public class CreateReportActivity extends BaseActivity {
                 new PickConfig.Builder(CreateReportActivity.this)
                         .maxPickSize(9)//最多选择几张
                         .isneedcamera(true)//是否需要第一项是相机
-                        .spanCount(4)//一行显示几张照片
+                        .spanCount(3)//一行显示几张照片
                         .actionBarcolor(Color.parseColor("#E91E63"))//设置toolbar的颜色
                         .statusBarcolor(Color.parseColor("#D81B60")) //设置状态栏的颜色(5.0以上)
                         .isneedcrop(false)//受否需要剪裁
